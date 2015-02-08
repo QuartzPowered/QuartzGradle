@@ -4,10 +4,11 @@ plugins {
     id 'maven-publish'
 }
 
-version = '1.0-SNAPSHOT'
+version = '0.1-SNAPSHOT'
 group = 'net.minecrell'
 
 sourceCompatibility = 1.7
+targetCompatibility = 1.7
 
 repositories {
     mavenCentral()
@@ -27,10 +28,23 @@ dependencies {
     compile 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
 }
 
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
 publishing {
     publications {
         mavenJava(MavenPublication) {
             from components.java
+
+            artifact sourcesJar
+
+            repositories {
+                maven {
+                    url = System.getenv('REPO_' + (version.endsWith('-SNAPSHOT') ? 'SNAPSHOTS' : 'RELEASES')) ?: "$buildDir/repo"
+                }
+            }
         }
     }
 }

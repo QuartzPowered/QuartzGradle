@@ -1,0 +1,18 @@
+sudo: false
+language: groovy
+jdk:
+  - openjdk7
+  - oraclejdk7
+  - oraclejdk8
+notifications:
+  email: false
+env:
+  global:
+    - LAPIS_DEPLOY=https://github.com/LapisBlue/Deploy.git DEPLOY_ROOT=/tmp/lapis/deploy
+    - GIT_REPO=git@github.com:Minecrell/Repo.git
+    - secure: "kVUzmftZhaCIlhQEgpDTR5uKg1GTk16A2pGnUgwN0I/1s1Tqfv2egL1iwkg3lyi/8awBn0X0Iv/vESRvpk9ekFbEIUxQDDzD1yEKYVp0hyfGJTvyFw+TM6uZIMpnNZTQIXSD6LG5fkj8n/KsqRbozK17AobN1FNq6CqdLpEg11w="
+after_success:
+  - |
+    git clone $LAPIS_DEPLOY $DEPLOY_ROOT && {
+      $DEPLOY_ROOT/maven_repo "gradle publish" openjdk7
+    }
