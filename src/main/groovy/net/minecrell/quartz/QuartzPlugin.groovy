@@ -3,7 +3,6 @@ package net.minecrell.quartz
 import static net.minecraftforge.gradle.common.Constants.JAR_SERVER_FRESH
 import static net.minecraftforge.gradle.user.UserConstants.MCP_PATCH_DIR
 import static net.minecraftforge.gradle.user.UserConstants.MERGE_CFG
-import static net.minecraftforge.gradle.user.UserConstants.REOBF_NOTCH_SRG
 
 import net.minecraftforge.gradle.delayed.DelayedFile
 import net.minecraftforge.gradle.tasks.ProcessJarTask
@@ -50,7 +49,6 @@ class QuartzPlugin extends UserBasePlugin<QuartzExtension> {
             }
 
             tasks.decompile.dependsOn 'cleanPatches'
-            tasks.reobf.srg = delayedFile REOBF_NOTCH_SRG
         }
     }
 
