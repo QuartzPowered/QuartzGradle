@@ -1,4 +1,4 @@
-package net.minecrell.quartz
+package net.minecrell.ice.gradle
 
 import net.minecraftforge.gradle.tasks.abstractutil.CachedTask
 import org.gradle.api.tasks.InputFile

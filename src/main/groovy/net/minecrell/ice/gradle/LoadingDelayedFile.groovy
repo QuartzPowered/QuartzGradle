@@ -1,4 +1,4 @@
-package net.minecrell.quartz
+package net.minecrell.ice.gradle
 
 import net.minecraftforge.gradle.common.BaseExtension
 import net.minecraftforge.gradle.common.BasePlugin

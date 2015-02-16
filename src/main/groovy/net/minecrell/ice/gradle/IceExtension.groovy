@@ -1,13 +1,13 @@
-package net.minecrell.quartz
+package net.minecrell.ice.gradle
 
 import net.minecraftforge.gradle.user.UserBasePlugin
 import net.minecraftforge.gradle.user.UserExtension
 
-class QuartzExtension extends UserExtension {
+class IceExtension extends UserExtension {
 
     String tweaker = 'null'
 
-    QuartzExtension(UserBasePlugin<? extends UserExtension> plugin) {
+    IceExtension(UserBasePlugin<? extends UserExtension> plugin) {
         super(plugin)
     }
 

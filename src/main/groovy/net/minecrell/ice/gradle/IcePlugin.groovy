@@ -1,4 +1,4 @@
-package net.minecrell.quartz
+package net.minecrell.ice.gradle
 
 import static net.minecraftforge.gradle.common.Constants.JAR_SERVER_FRESH
 import static net.minecraftforge.gradle.user.UserConstants.MCP_PATCH_DIR
@@ -10,17 +10,17 @@ import net.minecraftforge.gradle.user.UserBasePlugin
 import org.gradle.api.plugins.JavaPluginConvention
 import org.gradle.api.tasks.SourceSet
 
-class QuartzPlugin extends UserBasePlugin<QuartzExtension> {
+class IcePlugin extends UserBasePlugin<IceExtension> {
 
     private static final String JAR_SERVER =
             '{CACHE_DIR}/minecraft/net/minecraft/minecraft_server/{MC_VERSION}/minecraft_server_filtered-{MC_VERSION}.jar'
 
     private static final String FML_VERSION = '1.8-8.0.27.1027'
-    private static final String QUARTZ_CACHE_DIR = "{CACHE_DIR}/minecraft/net/minecrell/quartz/$FML_VERSION"
+    private static final String CACHE_DIR = "{CACHE_DIR}/minecraft/net/minecrell/ice/$FML_VERSION"
 
     @Override
-    protected Class<QuartzExtension> getExtensionClass() {
-        QuartzExtension
+    protected Class<IceExtension> getExtensionClass() {
+        IceExtension
     }
 
     @Override
@@ -92,28 +92,28 @@ class QuartzPlugin extends UserBasePlugin<QuartzExtension> {
     }
 
     @Override
-    protected String getApiVersion(QuartzExtension ext) {
+    protected String getApiVersion(IceExtension ext) {
         null
     }
 
     @Override
-    protected String getMcVersion(QuartzExtension ext) {
+    protected String getMcVersion(IceExtension ext) {
         ext.version
     }
 
     @Override
-    protected String getApiCacheDir(QuartzExtension ext) {
+    protected String getApiCacheDir(IceExtension ext) {
         '{BUILD_DIR}/minecraft/net/minecraft/minecraft_server/{MC_VERSION}'
     }
 
     @Override
-    protected String getSrgCacheDir(QuartzExtension userExtension) {
-        "$QUARTZ_CACHE_DIR/srgs"
+    protected String getSrgCacheDir(IceExtension userExtension) {
+        "$CACHE_DIR/srgs"
     }
 
     @Override
-    protected String getUserDevCacheDir(QuartzExtension userExtension) {
-        "$QUARTZ_CACHE_DIR/unpacked"
+    protected String getUserDevCacheDir(IceExtension userExtension) {
+        "$CACHE_DIR/unpacked"
     }
 
     @Override
@@ -184,10 +184,10 @@ class QuartzPlugin extends UserBasePlugin<QuartzExtension> {
 
     @Override
     protected DelayedFile getDevJson() {
-        new LoadingDelayedFile(this, "$QUARTZ_CACHE_DIR/unpacked/dev.json", { File file ->
+        new LoadingDelayedFile(this, "$CACHE_DIR/unpacked/dev.json", { File file ->
             if (file.exists()) {
                 file.withOutputStream { o ->
-                    QuartzPlugin.getResourceAsStream('/1.8.json').withStream {
+                    IcePlugin.getResourceAsStream('/1.8.json').withStream {
                         o << it
                     }
                 }
@@ -196,7 +196,7 @@ class QuartzPlugin extends UserBasePlugin<QuartzExtension> {
     }
 
     @Override
-    protected QuartzExtension getOverlayExtension() {
+    protected IceExtension getOverlayExtension() {
         null
     }
 
