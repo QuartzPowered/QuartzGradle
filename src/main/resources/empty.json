@@ -1,0 +1,11 @@
+{
+    "id": "@minecraft_version@-@project@@version@",
+    "time": "@timestamp@",
+    "releaseTime": "2014-09-02T08:24:35+00:00",
+    "type": "release",
+    "minecraftArguments": "",
+    "minimumLauncherVersion": 14,
+    "assets": "1.8",
+    "libraries": [],
+    "mainClass": "net.minecraft.launchwrapper.Launch"
+}

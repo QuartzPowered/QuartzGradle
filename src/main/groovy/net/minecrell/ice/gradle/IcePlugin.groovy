@@ -1,12 +1,16 @@
 package net.minecrell.ice.gradle
 
 import static net.minecraftforge.gradle.common.Constants.JAR_SERVER_FRESH
+import static net.minecraftforge.gradle.user.UserConstants.CONFIG_DEPS
 import static net.minecraftforge.gradle.user.UserConstants.MCP_PATCH_DIR
 import static net.minecraftforge.gradle.user.UserConstants.MERGE_CFG
 
 import net.minecraftforge.gradle.delayed.DelayedFile
+import net.minecraftforge.gradle.json.JsonFactory
+import net.minecraftforge.gradle.json.version.Version
 import net.minecraftforge.gradle.tasks.ProcessJarTask
 import net.minecraftforge.gradle.user.UserBasePlugin
+import org.gradle.api.artifacts.Configuration
 import org.gradle.api.plugins.JavaPluginConvention
 import org.gradle.api.tasks.SourceSet
 
@@ -28,6 +32,20 @@ class IcePlugin extends UserBasePlugin<IceExtension> {
         super.applyPlugin()
 
         project.with {
+            tasks.extractUserDev.doLast {
+                def file = dependencyFile
+                if (!file.exists()) {
+                    file.createNewFile()
+                    file.withOutputStream { o ->
+                        IcePlugin.getResourceAsStream('/1.8.json').withStream {
+                            o << it
+                        }
+                    }
+                }
+
+                loadDependencies file
+            }
+
             tasks.mergeJars.enabled = false
 
             task('filterJar', type: FilterJarTask) {
@@ -52,8 +70,47 @@ class IcePlugin extends UserBasePlugin<IceExtension> {
         }
     }
 
+    private Version version;
+    private boolean versionApplied;
+
+    private File getDependencyFile() {
+        return new File(getDevJson().call().parentFile, '1.8.json')
+    }
+
+    private void loadDependencies(File file) {
+        if (version == null) {
+            file.withReader {
+                version = JsonFactory.GSON.fromJson(it, Version)
+            }
+        }
+
+        if (versionApplied)
+            return;
+
+        if (project.configurations[CONFIG_DEPS].state == Configuration.State.UNRESOLVED) {
+            version.getLibraries().each {
+                def dep = project.dependencies.add(CONFIG_DEPS, it.getArtifactName()) {
+                    transitive = false
+                }
+                if (it.artifactName.startsWith('org.ow2.asm:asm-debug-all')) {
+                    project.dependencies.add('runtime', "org.ow2.asm:asm-all:$dep.version") {
+                        transitive = false
+                    }
+                }
+            }
+        }
+
+        versionApplied = true
+    }
+
     @Override
     protected void delayedTaskConfig() {
+        // Add libraries
+        def file = dependencyFile
+        if (file.exists()) {
+            loadDependencies file
+        }
+
         ProcessJarTask binDeobf = project.tasks.deobfBinJar
         ProcessJarTask decompDeobf = project.tasks.deobfuscateJar
 
@@ -186,9 +243,12 @@ class IcePlugin extends UserBasePlugin<IceExtension> {
     protected DelayedFile getDevJson() {
         new LoadingDelayedFile(this, "$CACHE_DIR/unpacked/dev.json", { File file ->
             if (file.exists()) {
-                file.withOutputStream { o ->
-                    IcePlugin.getResourceAsStream('/1.8.json').withStream {
-                        o << it
+                def i = IcePlugin.getResourceAsStream('/empty.json')
+                if (i != null) {
+                    i.withStream {
+                        file.withOutputStream { o ->
+                            o << i
+                        }
                     }
                 }
             }
