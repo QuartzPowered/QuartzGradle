@@ -52,6 +52,7 @@ class IcePlugin extends UserBasePlugin<IceExtension> {
                 mergeCfg = delayedFile MERGE_CFG
                 inJar = delayedFile JAR_SERVER_FRESH
                 outJar = delayedFile JAR_SERVER
+                dependsOn 'extractUserDev', 'downloadServer'
             }
 
             configure([tasks.deobfBinJar, tasks.deobfuscateJar]) {
