@@ -48,3 +48,8 @@ publishing {
         }
     }
 }
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.3'
+    distributionUrl = "https://services.gradle.org/distributions/gradle-$gradleVersion-all.zip"
+}
