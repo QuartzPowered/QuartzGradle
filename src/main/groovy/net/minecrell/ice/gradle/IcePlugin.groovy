@@ -191,7 +191,7 @@ class IcePlugin extends UserBasePlugin<IceExtension> {
 
     @Override
     protected String getStartDir() {
-        '{BUILD_DIR}/start/QuartzStart'
+        '{BUILD_DIR}/start'
     }
 
     @Override
