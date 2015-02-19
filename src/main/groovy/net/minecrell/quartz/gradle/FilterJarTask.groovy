@@ -57,7 +57,7 @@ class FilterJarTask extends CachedTask {
             outJar.withStream {
                 inJar.entries().each {
                     def name = it.name
-                    if (filter.find { name.startsWith(it) } == null) {
+                    if (filter.find {name.startsWith(it)} == null) {
                         ZipEntry newEntry = new ZipEntry(it)
                         outJar.putNextEntry newEntry
                         outJar << inJar.getInputStream(it)

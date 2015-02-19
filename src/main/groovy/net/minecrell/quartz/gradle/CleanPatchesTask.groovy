@@ -57,7 +57,7 @@ class CleanPatchesTask extends AbstractTask {
 
                         true
                     }
-                    it.withWriter { w ->
+                    it.withWriter {w ->
                         lines.each {
                             w.write(it)
                             w.write('\n')

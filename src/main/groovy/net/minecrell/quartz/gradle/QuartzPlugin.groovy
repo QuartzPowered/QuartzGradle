@@ -58,7 +58,7 @@ class QuartzPlugin extends UserBasePlugin<QuartzExtension> {
                 def file = dependencyFile
                 if (!file.exists()) {
                     file.createNewFile()
-                    file.withOutputStream { o ->
+                    file.withOutputStream {o ->
                         QuartzPlugin.getResourceAsStream('/1.8.json').withStream {
                             o << it
                         }
@@ -93,8 +93,8 @@ class QuartzPlugin extends UserBasePlugin<QuartzExtension> {
         }
     }
 
-    private Version version;
-    private boolean versionApplied;
+    private Version version
+    private boolean versionApplied
 
     private File getDependencyFile() {
         return new File(getDevJson().call().parentFile, '1.8.json')
@@ -107,8 +107,9 @@ class QuartzPlugin extends UserBasePlugin<QuartzExtension> {
             }
         }
 
-        if (versionApplied)
-            return;
+        if (versionApplied) {
+            return
+        }
 
         if (project.configurations[CONFIG_DEPS].state == Configuration.State.UNRESOLVED) {
             version.getLibraries().each {
@@ -264,12 +265,12 @@ class QuartzPlugin extends UserBasePlugin<QuartzExtension> {
 
     @Override
     protected DelayedFile getDevJson() {
-        new LoadingDelayedFile(this, "$CACHE_DIR/unpacked/dev.json", { File file ->
+        new LoadingDelayedFile(this, "$CACHE_DIR/unpacked/dev.json", {File file ->
             if (file.exists()) {
                 def i = QuartzPlugin.getResourceAsStream('/empty.json')
                 if (i != null) {
                     i.withStream {
-                        file.withOutputStream { o ->
+                        file.withOutputStream {o ->
                             o << i
                         }
                     }
