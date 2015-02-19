@@ -2,6 +2,7 @@ plugins {
     id 'groovy'
     id 'idea'
     id 'maven-publish'
+    id 'com.github.hierynomus.license' version '0.11.0'
 }
 
 version = '0.1-SNAPSHOT'
@@ -26,6 +27,19 @@ dependencies {
     compile gradleApi()
     compile localGroovy()
     compile 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
+}
+
+license {
+    header file('LICENSE')
+    exclude '*.txt'
+    exclude '*.json'
+    exclude '*.properties'
+    sourceSets = project.sourceSets
+    ignoreFailures false
+    strictCheck true
+    mapping {
+        java = 'SLASHSTAR_STYLE'
+    }
 }
 
 task sourcesJar(type: Jar) {
