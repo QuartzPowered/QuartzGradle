@@ -1,4 +1,4 @@
-package net.minecrell.ice.gradle
+package net.minecrell.quartz.gradle
 
 import com.github.abrarsyed.jastyle.FileWildcardFilter
 import org.gradle.api.internal.AbstractTask

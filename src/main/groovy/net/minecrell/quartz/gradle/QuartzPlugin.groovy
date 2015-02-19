@@ -1,4 +1,4 @@
-package net.minecrell.ice.gradle
+package net.minecrell.quartz.gradle
 
 import static net.minecraftforge.gradle.common.Constants.JAR_SERVER_FRESH
 import static net.minecraftforge.gradle.user.UserConstants.CONFIG_DEPS
@@ -14,17 +14,17 @@ import org.gradle.api.artifacts.Configuration
 import org.gradle.api.plugins.JavaPluginConvention
 import org.gradle.api.tasks.SourceSet
 
-class IcePlugin extends UserBasePlugin<IceExtension> {
+class QuartzPlugin extends UserBasePlugin<QuartzExtension> {
 
     private static final String JAR_SERVER =
             '{CACHE_DIR}/minecraft/net/minecraft/minecraft_server/{MC_VERSION}/minecraft_server_filtered-{MC_VERSION}.jar'
 
     private static final String FML_VERSION = '1.8-8.0.27.1027'
-    private static final String CACHE_DIR = "{CACHE_DIR}/minecraft/net/minecrell/ice/$FML_VERSION"
+    private static final String CACHE_DIR = "{CACHE_DIR}/minecraft/net/minecrell/quartz/$FML_VERSION"
 
     @Override
-    protected Class<IceExtension> getExtensionClass() {
-        IceExtension
+    protected Class<QuartzExtension> getExtensionClass() {
+        QuartzExtension
     }
 
     @Override
@@ -37,7 +37,7 @@ class IcePlugin extends UserBasePlugin<IceExtension> {
                 if (!file.exists()) {
                     file.createNewFile()
                     file.withOutputStream { o ->
-                        IcePlugin.getResourceAsStream('/1.8.json').withStream {
+                        QuartzPlugin.getResourceAsStream('/1.8.json').withStream {
                             o << it
                         }
                     }
@@ -150,27 +150,27 @@ class IcePlugin extends UserBasePlugin<IceExtension> {
     }
 
     @Override
-    protected String getApiVersion(IceExtension ext) {
+    protected String getApiVersion(QuartzExtension ext) {
         null
     }
 
     @Override
-    protected String getMcVersion(IceExtension ext) {
+    protected String getMcVersion(QuartzExtension ext) {
         ext.version
     }
 
     @Override
-    protected String getApiCacheDir(IceExtension ext) {
+    protected String getApiCacheDir(QuartzExtension ext) {
         '{BUILD_DIR}/minecraft/net/minecraft/minecraft_server/{MC_VERSION}'
     }
 
     @Override
-    protected String getSrgCacheDir(IceExtension userExtension) {
+    protected String getSrgCacheDir(QuartzExtension userExtension) {
         "$CACHE_DIR/srgs"
     }
 
     @Override
-    protected String getUserDevCacheDir(IceExtension userExtension) {
+    protected String getUserDevCacheDir(QuartzExtension userExtension) {
         "$CACHE_DIR/unpacked"
     }
 
@@ -244,7 +244,7 @@ class IcePlugin extends UserBasePlugin<IceExtension> {
     protected DelayedFile getDevJson() {
         new LoadingDelayedFile(this, "$CACHE_DIR/unpacked/dev.json", { File file ->
             if (file.exists()) {
-                def i = IcePlugin.getResourceAsStream('/empty.json')
+                def i = QuartzPlugin.getResourceAsStream('/empty.json')
                 if (i != null) {
                     i.withStream {
                         file.withOutputStream { o ->
@@ -257,7 +257,7 @@ class IcePlugin extends UserBasePlugin<IceExtension> {
     }
 
     @Override
-    protected IceExtension getOverlayExtension() {
+    protected QuartzExtension getOverlayExtension() {
         null
     }
 
