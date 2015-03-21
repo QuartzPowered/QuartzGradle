@@ -5,28 +5,19 @@ plugins {
     id 'com.github.hierynomus.license' version '0.11.0'
 }
 
-version = '0.1-SNAPSHOT'
+version = '1.0-SNAPSHOT'
 group = 'net.minecrell'
 
-sourceCompatibility = 1.7
-targetCompatibility = 1.7
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 repositories {
     mavenCentral()
-    maven {
-        name = 'forge'
-        url = 'http://files.minecraftforge.net/maven'
-    }
-    maven {
-        name = 'sonatype'
-        url = 'https://oss.sonatype.org/content/repositories/snapshots/'
-    }
 }
 
 dependencies {
     compile gradleApi()
     compile localGroovy()
-    compile 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
 }
 
 license {
