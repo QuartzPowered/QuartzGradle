@@ -13,11 +13,16 @@ targetCompatibility = 1.8
 
 repositories {
     mavenCentral()
+    maven {
+        name = 'minecrell-snapshots'
+        url = 'http://repo.minecrell.net/snapshots'
+    }
 }
 
 dependencies {
     compile gradleApi()
     compile localGroovy()
+    compile 'net.minecrell.quartz:mappings-transformer:1.0-SNAPSHOT'
 }
 
 license {
