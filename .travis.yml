@@ -1,8 +1,6 @@
 sudo: false
 language: groovy
 jdk:
-  - openjdk7
-  - oraclejdk7
   - oraclejdk8
 notifications:
   email: false
@@ -14,5 +12,5 @@ env:
 #after_success:
 #  - |
 #    git clone $LAPIS_DEPLOY $DEPLOY_ROOT && {
-#      $DEPLOY_ROOT/maven_repo "gradle publish" openjdk7
+#      $DEPLOY_ROOT/maven_repo "gradle publish" openjdk8
 #    }
