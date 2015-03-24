@@ -35,6 +35,9 @@ class QuartzPlugin implements Plugin<Project> {
     Path quartzPath
     Path minecraftPath
 
+    Path projectQuartzPath
+    Path projectMinecraftPath
+
     Project project
 
     @Override
@@ -44,6 +47,9 @@ class QuartzPlugin implements Plugin<Project> {
         project.with {
             quartzPath = gradle.gradleUserHomeDir.toPath().resolve('caches').resolve('quartz')
             minecraftPath = quartzPath.resolve('minecraft')
+
+            projectQuartzPath = project.buildDir.toPath().resolve('quartz')
+            projectMinecraftPath = projectQuartzPath.resolve('minecraft')
 
             extensions.create('quartz', QuartzExtension)
             configurations.create('mappings')
@@ -78,13 +84,11 @@ class QuartzPlugin implements Plugin<Project> {
                     include 'net/minecraft/**'
                 }
 
-                evaluationDependsOn ':mc'
-
                 task('deobfuscateJar', type: DeobfuscateJar) {
                     dependsOn filterJar
                     input = filterJar.archivePath
                     mappings = configurations.mappings
-                    output = minecraftPath.resolve("minecraft_server-$quartz.minecraft-deobfuscated.jar").toFile()
+                    output = projectMinecraftPath.resolve("minecraft_server-$quartz.minecraft-deobfuscated.jar").toFile()
                 }
             }
         }
